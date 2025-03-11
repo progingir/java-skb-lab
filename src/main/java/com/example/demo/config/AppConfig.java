@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Primary;
 public class AppConfig {
     @Bean
     @Primary
-    public MessageService emailService() {
+    public MessageService EmailService() {
         return new EmailService();
     }
 
