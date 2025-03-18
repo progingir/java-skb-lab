@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.service.MessageService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
