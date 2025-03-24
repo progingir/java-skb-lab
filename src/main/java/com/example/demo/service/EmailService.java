@@ -2,22 +2,18 @@ package com.example.demo.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Slf4j
 public class EmailService implements MessageService {
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
-
     @PostConstruct
     public void init() {
-        logger.info("EmailService bean created");
+        log.info("EmailService bean created");
     }
 
     @PreDestroy
     public void destroy() {
-        logger.info("EmailService bean destroyed");
+        log.info("EmailService bean destroyed");
     }
 
     @Override

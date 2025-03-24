@@ -2,22 +2,18 @@ package com.example.demo.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Slf4j
 public class SMSService implements MessageService {
-    private static final Logger logger = LoggerFactory.getLogger(SMSService.class);
-
     @PostConstruct
     public void init() {
-        logger.info("SMSService bean created");
+        log.info("SMSService bean created");
     }
 
     @PreDestroy
     public void destroy() {
-        logger.info("SMSService bean destroyed");
+        log.info("SMSService bean destroyed");
     }
 
     @Override

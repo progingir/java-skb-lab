@@ -1,24 +1,19 @@
 package com.example.demo.config;
 
-import com.example.demo.service.MessageService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.SMSService;
 import org.springframework.context.annotation.Bean;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
-
 public class AppConfig {
     @Bean
-    @Primary
-    public MessageService EmailService() {
+    public EmailService emailService() {
         return new EmailService();
     }
 
     @Bean
-    public MessageService smsService() {
+    public SMSService smsService() { // Имя метода и тип совпадают
         return new SMSService();
     }
 }

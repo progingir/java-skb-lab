@@ -1,35 +1,22 @@
 package com.example.demo.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class MessageProcessor {
-    private static final Logger logger = LoggerFactory.getLogger(MessageProcessor.class);
+    private final EmailService emailService;
+    private final SMSService smsService;
 
-    @Autowired
-    private MessageService emailService;
-
-    private final MessageService smsService;
-
-    private MessageService anotherService;
-
-    @Autowired
-    public MessageProcessor(MessageService smsService) {
+    public MessageProcessor(EmailService emailService, SMSService smsService) {
+        this.emailService = emailService;
         this.smsService = smsService;
     }
 
-    @Autowired
-    public void setAnotherService(MessageService anotherService) {
-        this.anotherService = anotherService;
-    }
-
     public void processMessages() {
-        logger.info("Processing messages:");
-        logger.info("Email service: " + emailService.getMessage());
-        logger.info("SMS service: " + smsService.getMessage());
-        logger.info("Another service: " + anotherService.getMessage());
+        log.info("Processing messages:");
+        log.info("Email service: " + emailService.getMessage());
+        log.info("SMS service: " + smsService.getMessage());
     }
 }
