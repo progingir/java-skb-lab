@@ -13,7 +13,7 @@ public class AppConfig {
     }
 
     @Bean
-    public SMSService smsService() { // Имя метода и тип совпадают
+    public SMSService smsService() {
         return new SMSService();
     }
 }
