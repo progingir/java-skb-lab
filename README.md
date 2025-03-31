@@ -1,4 +1,4 @@
-# Домашка 5
+# Домашка 6
 # Бутько Валерия Алексеевна
 
 Проект был расширен из ветки 3-di
@@ -8,7 +8,7 @@
 
 Код включал следующее:
 
-- Главный класс `DemoApplication` с запуском приложения и закрытием контекста через `context.close()`
+- Главный класс `DemoApplication` с запуском приложения
 - Класс `AppConfig` с двумя бинами: `EmailService` и `SMSService`
 - Интерфейс `MessageService` с методом `getMessage()`
 - Классы `EmailService` и `SMSService`, реализующие интерфейс, с логами создания и уничтожения через `@PostConstruct` и `@PreDestroy`
@@ -32,7 +32,14 @@
 - Новый DTO-класс `UserInput` с полем `name`, валидируемым через `@ComplexNameValidation`
 - Добавлен `ValidationController` с REST-endpoint'ом `/api/validate` для проверки валидации и обработки ошибок с красивым JSON-ответом
 
-### 3. Зависимости
+### 3. Конфигурация профилей
+- Добавлены три профиля: `dev`, `test`, `prod`.
+- Созданы файлы конфигурации в `src/main/resources`:
+  - `application-dev.yml`
+  - `application-test.yml`
+  - `application-prod.yml`
+
+### 4. Зависимости
 - Обновлен `build.gradle` для поддержки новых функций:
     - Добавлен `spring-boot-starter-validation` для валидации
     - Добавлен Lombok как `implementation` и `annotationProcessor`
