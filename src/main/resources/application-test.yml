@@ -1,0 +1,6 @@
+app:
+  name: "TEST ??????"
+  config:
+    values: test_sword, test_potion
+  example:
+    env: ${EXAMPLE_TEST:default}

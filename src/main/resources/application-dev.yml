@@ -1,0 +1,6 @@
+app:
+  name: "DEV ??????"
+  config:
+    values: sword, potion, shield
+  example:
+    env: ${EXAMPLE_ENV:default}
