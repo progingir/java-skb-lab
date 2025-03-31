@@ -18,12 +18,31 @@ repositories {
 }
 
 dependencies {
+	// Основной стартер Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter'
+
+	// Поддержка веб-приложения и REST-контроллеров
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Поддержка валидации (Jakarta Validation)
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Lombok для упрощения кода (@Data, @Slf4j и т.д.)
+	implementation 'org.projectlombok:lombok:1.18.34'
+	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+	testImplementation 'org.projectlombok:lombok:1.18.34'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	// Зависимости для тестов
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Дополнительная настройка для Spring Boot (опционально)
+tasks.named('bootJar') {
+	archiveFileName = "demo-${version}.jar"
 }
