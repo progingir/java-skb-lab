@@ -53,7 +53,7 @@
    - Сохраняет `TodoList` в базу через `TodoListRepository.save()`, что автоматически сохраняет и связанные `Event` (благодаря cascade = CascadeType.ALL)
 5. Возвращается сохраненный `TodoList` с сгенерированным id и связанными `Event`  
 
-#### Создание списка дел (`POST /api/todos`)
+#### Получение списков дел (GET /api/todos)
 1. Клиент отправляет GET-запрос на `/api/todos`
 2. `TodoController` вызывает `TodoListService.getAllTodoLists`
 3. Сервис вызывает `TodoListRepository.findAll()`, который извлекает все TodoList из базы вместе с их `events` (за счет связи `@OneToMany`)
