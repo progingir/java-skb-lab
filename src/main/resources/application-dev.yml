@@ -1,6 +1,11 @@
-app:
-  name: "DEV ??????"
-  config:
-    values: sword, potion, shield
-  example:
-    env: ${EXAMPLE_ENV:default}
+spring:
+  application:
+    name:learn-project-dev
+
+users:
+  - dev-user-1
+  - dev-user-2
+  - dev-user-3
+
+EXAMPLE_TEST:
+  ${test_value:default}

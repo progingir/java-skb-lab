@@ -1,45 +1,47 @@
 # Домашка 6
 # Бутько Валерия Алексеевна
 
-Проект был расширен из ветки 3-di
-В нем есть работа с профилями, условными бинами и валидацией данных
+Проект включает работу с профилями, условными бинами и валидацией данных
 
-## Исходная версия из 3-di
+## Описание проекта
 
-Код включал следующее:
+Проект представляет собой Spring Boot приложение с поддержкой профилей (`dev`, `test`, `prod`), условных бинов и валидации входных данных. Основные задачи, реализованные в проекте:
+- настройка профилей с конфигурациями (список значений, название приложения, переменная окружения)
+- создание условных бинов с зависимостями и условиями инициализации
+- реализация кастомной и комбинированной валидации для обработки пользовательских данных
 
-- Главный класс `DemoApplication` с запуском приложения
-- Класс `AppConfig` с двумя бинами: `EmailService` и `SMSService`
-- Интерфейс `MessageService` с методом `getMessage()`
-- Классы `EmailService` и `SMSService`, реализующие интерфейс, с логами создания и уничтожения через `@PostConstruct` и `@PreDestroy`
-- Класс `MessageProcessor` для обработки сообщений от сервисов с внедрением зависимостей через конструктор
-- Минимальный набор для работы Spring Boot и логирования через Lombok
+## Структура и компоненты
 
-## Что изменилось и добавилось
+### 1. Главный класс
+- Класс `DemoApplication` — точка входа 
 
-Вот ключевые изменения:
-
-### 1. Условные бины
-- Новый класс `ConditionalConfig` с тремя бинами:
-    - `TestProfileBean` — создается только в профиле `test` (аннотация `@Profile("test")`)
-    - `DependentBean` — создается только в профиле `test` и зависит от `TestProfileBean` (использует `@DependsOn` и `@Profile("test")`)
-    - `EnvironmentBean` — создается, если свойство `example.test` не равно `default` (через `@Value("${example.test:default}")`)
-
-### 2. Валидация
-- Добавлен пакет `com.example.demo.validation`:
-    - Кастомная аннотация `@ValidRussianName` с валидатором `RussianNameValidator` для проверки русских имен (заглавная буква и только русские символы)
-    - Составная аннотация `@ComplexNameValidation`, объединяющая `@NotBlank`, `@Size` и `@ValidRussianName`
-- Новый DTO-класс `UserInput` с полем `name`, валидируемым через `@ComplexNameValidation`
-- Добавлен `ValidationController` с REST-endpoint'ом `/api/validate` для проверки валидации и обработки ошибок с красивым JSON-ответом
+### 2. Условные бины
+- Пакет `com.example.demo.beans` содержит три бина:
+  - `TestBean` — создаётся только в профиле `test` (использует аннотацию `@Profile("test")`). Логирует создание через `@PostConstruct`
+  - `TestChildBean` — создаётся, только если существует `TestBean` (использует `@ConditionalOnBean(TestBean.class)`). Логирует создание
+  - `EnvBean` — создаётся, если переменная окружения `EXAMPLE_TEST` не равна `default` (использует `@ConditionalOnExpression("#{'${EXAMPLE_TEST:default}' != 'default'}")`). Логирует создание
 
 ### 3. Конфигурация профилей
-- Добавлены три профиля: `dev`, `test`, `prod`.
-- Созданы файлы конфигурации в `src/main/resources`:
-  - `application-dev.yml`
-  - `application-test.yml`
-  - `application-prod.yml`
+- Созданы три профиля: `dev`, `test`, `prod`.
+- Конфигурационные файлы в `src/main/resources`:
+  - `application.yml` — основная конфигурация с активным профилем `test` по умолчанию, портом `8082`, списком пользователей (`users`) и переменной `EXAMPLE_TEST`
+  - `application-dev.yml` — профиль `dev` с уникальным именем приложения (`learn-project-dev`), списком пользователей и `EXAMPLE_TEST`
+  - `application-test.yml` — профиль `test` с именем приложения (`learn-project-test`), списком пользователей и `EXAMPLE_TEST`
+  - `application-prod.yml` — профиль `prod` с именем приложения (`learn-project-prod`), списком пользователей и `EXAMPLE_TEST`
+- Каждый профиль содержит:
+  - Список пользователей (например, `dev-user-1`, `dev-user-2`, `dev-user-3`)
+  - Уникальное имя приложения
+  - Переменную окружения `EXAMPLE_TEST` с дефолтным значением `default` (через `${test_value:default}`)
 
-### 4. Зависимости
-- Обновлен `build.gradle` для поддержки новых функций:
-    - Добавлен `spring-boot-starter-validation` для валидации
-    - Добавлен Lombok как `implementation` и `annotationProcessor`
+### 4. Валидация
+- Пакет `com.example.demo.validation` содержит:
+  - Кастомная аннотация `@ValidUserName` с валидатором `UserNameValidator`. Проверяет, что имя пользователя содержит только буквы и цифры (регулярка `^[a-zA-Z0-9]+$`). Сообщение об ошибке: «Имя пользователя должно содержать только буквы и цифры»
+  - Комбинированная аннотация `@ValidUser`, объединяющая:
+    - `@NotNull` (сообщение: «Имя пользователя не может быть null»)
+    - `@Size(min = 3, max = 20)` (сообщение: «Имя пользователя должно быть от 3 до 20 символов»)
+    - `@ValidUserName`
+- DTO-класс `User` в пакете `com.example.demo.model` с полем `username`, валидируемым через `@ValidUser`
+- Класс `UserController` в пакете `com.example.demo.controller`:
+  - REST-endpoint `/users` (POST) принимает JSON с полем `username`
+  - Использует `@Valid` для валидации входного объекта `User`
+  - Возвращает `200 OK` с сообщением о создании пользователя или `400 Bad Request` с описанием ошибок валидации

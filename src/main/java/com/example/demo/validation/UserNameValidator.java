@@ -3,12 +3,12 @@ package com.example.demo.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class RussianNameValidator implements ConstraintValidator<ValidRussianName, String> {
+public class UserNameValidator implements ConstraintValidator<ValidUserName, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
-        return value.matches("^[А-ЯЁ][а-яё]*$");
+        return value.matches("^[a-zA-Z0-9]+$");
     }
 }
