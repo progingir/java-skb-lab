@@ -1,23 +1,16 @@
 package com.example.demo.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 public class HeadersController {
 
     @GetMapping("/headers")
-    public String getHeaders(HttpServletRequest request, Model model) {
-        Map<String, String> headers = new HashMap<>();
-        Collections.list(request.getHeaderNames())
-                .forEach(name -> headers.put(name, request.getHeader(name)));
-        model.addAttribute("headers", headers);
-        return "headers";
+    public Map<String, String> getHeaders(@RequestHeader Map<String, String> headers) {
+        return headers;
     }
 }

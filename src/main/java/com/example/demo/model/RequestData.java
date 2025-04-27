@@ -1,14 +1,7 @@
 package com.example.demo.model;
 
-import lombok.Data;
+public record RequestData(Double price, RequestData.Info info) {
 
-@Data
-public class RequestData {
-    private Double price;
-    private Info info;
-
-    @Data
-    public static class Info {
-        private String date;
+    public record Info(String date) {
     }
 }
