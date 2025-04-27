@@ -1,30 +1,24 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "events")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_list_id", nullable = false)
     private TodoList todoList;
 
     @Column(nullable = false)
     private String title;
-
-    public Event() {}
-
-    public Event(String title, TodoList todoList) {
-        this.title = title;
-        this.todoList = todoList;
-    }
 }

@@ -1,11 +1,17 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "todo_lists")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TodoList {
 
     @Id
@@ -15,37 +21,6 @@ public class TodoList {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "todoList", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
-
-    public TodoList() {}
-
-    public TodoList(String name, List<Event> events) {
-        this.name = name;
-        this.events = events;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 }

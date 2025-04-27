@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.TodoListDto;
+import com.example.demo.dto.TodoListResponseDto;
 import com.example.demo.model.TodoList;
 import com.example.demo.service.TodoListService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api/todos")
 public class TodoController {
 
-    @Autowired
-    private TodoListService todoListService;
+    private final TodoListService todoListService;
+
+    public TodoController(TodoListService todoListService) {
+        this.todoListService = todoListService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -24,7 +27,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public List<TodoList> getAllTodoLists() {
+    public List<TodoListResponseDto> getAllTodoLists() {
         return todoListService.getAllTodoLists();
     }
 }
