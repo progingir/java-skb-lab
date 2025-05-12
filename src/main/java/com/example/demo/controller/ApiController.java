@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/test")
 public class ApiController {
 
-    @RequestLimit
     @GetMapping("/run")
     public String run() {
         return "Hello, World!";
