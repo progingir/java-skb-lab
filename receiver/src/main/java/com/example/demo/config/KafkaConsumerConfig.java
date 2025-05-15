@@ -25,7 +25,7 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<String, Object> consumerFactory() {
         var config = kafkaProperties.buildConsumerProperties();
         JsonDeserializer<Object> deserializer = new JsonDeserializer<>(objectMapper);
-        deserializer.addTrustedPackages("com.example.demo.dto"); // Доверять пакету с MessageDto
+        deserializer.addTrustedPackages("com.example.demo.dto");
         return new DefaultKafkaConsumerFactory<>(
                 config,
                 new StringDeserializer(),
