@@ -14,7 +14,8 @@ public class MessageListener {
 
     @KafkaListener(
             topics = "${app.kafka.consumer.message.topic}",
-            groupId = "${app.kafka.consumer.message.group-id}"
+            groupId = "${app.kafka.consumer.message.group-id}",
+            containerFactory = "kafkaListenerContainerFactory"
     )
     public void listen(MessageDto message) {
         messageProcessorService.processMessage(message);
