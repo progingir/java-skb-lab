@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: receiver
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: messages-in
+      auto-offset-reset: earliest
+server:
+  port: 8082
+app:
+  kafka:
+    consumer:
+      message:
+        topic: messages.send
+        group-id: messages-in
